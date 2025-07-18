@@ -1,0 +1,91 @@
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  will-change: opacity;
+  transform: translateZ(0);
+  mix-blend-mode: lighten;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+/* Prerendered star animation frames with enhanced brightness */
+@keyframes star-animation-1 {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes star-animation-2 {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes star-animation-3 {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes star-animation-4 {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.95; }
+}
+
+/* Apply different animations to groups of stars */
+.star.anim-group-0 {
+  animation: star-animation-1 3s infinite;
+  filter: brightness(1.2);
+}
+
+.star.anim-group-1 {
+  animation: star-animation-2 4s infinite;
+  filter: brightness(1.3);
+}
+
+.star.anim-group-2 {
+  animation: star-animation-3 5s infinite;
+  filter: brightness(1.2);
+}
+
+.star.anim-group-3 {
+  animation: star-animation-1 4.5s infinite;
+  filter: brightness(1.4);
+}
+
+/* Different sizes for stars with enhanced glow */
+.star.tiny {
+  width: 1px;
+  height: 1px;
+  box-shadow: 0 0 3px 1px rgba(255, 255, 255, 0.9);
+  background-color: white;
+}
+
+.star.small {
+  width: 2px;
+  height: 2px;
+  box-shadow: 0 0 4px 2px rgba(255, 255, 255, 0.95);
+  background-color: white;
+}
+
+.star.medium {
+  width: 3px;
+  height: 3px;
+  box-shadow: 0 0 6px 3px white;
+  background-color: white;
+}
+
+.star.large {
+  width: 4px;
+  height: 4px;
+  box-shadow: 0 0 8px 4px white;
+  background-color: white;
+}

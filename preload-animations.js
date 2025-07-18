@@ -16,8 +16,24 @@
   rainbowPreload.style.width = '100px';
   rainbowPreload.style.height = '100px';
   
+  // Preload star animations
+  const starPreload1 = document.createElement('div');
+  starPreload1.className = 'star tiny';
+  starPreload1.style.position = 'absolute';
+  
+  const starPreload2 = document.createElement('div');
+  starPreload2.className = 'star small';
+  starPreload2.style.position = 'absolute';
+  
+  const starPreload3 = document.createElement('div');
+  starPreload3.className = 'star medium';
+  starPreload3.style.position = 'absolute';
+  
   // Add to preload container
   preloadContainer.appendChild(rainbowPreload);
+  preloadContainer.appendChild(starPreload1);
+  preloadContainer.appendChild(starPreload2);
+  preloadContainer.appendChild(starPreload3);
   
   // Add to document when DOM is ready
   if (document.body) {

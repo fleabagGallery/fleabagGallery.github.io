@@ -50,40 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Create starry sky with reduced number of stars
-  const starrySky = document.createElement('div');
-  starrySky.className = 'starry-sky';
-  document.body.prepend(starrySky);
-
-  // Create stars with reduced count for better performance
-  // Use a document fragment to batch DOM operations
-  const starsFragment = document.createDocumentFragment();
-  const starCount = isMobile ? 50 : 100; // Reduce stars on mobile
-  
-  for (let i = 0; i < starCount; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    
-    // Random position
-    const left = Math.random() * 100;
-    const top = Math.random() * 100;
-    star.style.left = `${left}%`;
-    star.style.top = `${top}%`;
-    
-    // Random size (1-3px)
-    const size = Math.random() * 2 + 1;
-    star.style.width = `${size}px`;
-    star.style.height = `${size}px`;
-    
-    // Random animation duration and delay
-    star.style.setProperty('--pulse-duration', `${Math.random() * 3 + 2}s`);
-    star.style.setProperty('--pulse-delay', `${Math.random() * 5}s`);
-    
-    starsFragment.appendChild(star);
-  }
-  
-  // Add all stars at once to minimize reflows
-  starrySky.appendChild(starsFragment);
+  // Stars are now handled by stars-background.js
   
   // Mobile-specific optimizations
   if (isMobile) {

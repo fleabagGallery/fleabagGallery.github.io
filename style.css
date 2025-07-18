@@ -59,84 +59,9 @@ body {
   }
 }
 
-.starry-sky {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
-  overflow: hidden;
-}
+/* Stars are now handled by stars-background.css */
 
-.star {
-  position: absolute;
-  background-color: white;
-  border-radius: 50%;
-  animation: pulse var(--pulse-duration) infinite alternate;
-  animation-delay: var(--pulse-delay);
-  /* Remove blur filter for better performance */
-  /* Use hardware acceleration */
-  transform: translateZ(0);
-  will-change: opacity;
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 0.1;
-    /* Remove box-shadow animation for better performance */
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.1;
-  }
-}
-
-/* Add a few larger stars with box-shadow for visual effect without animating all of them */
-.star:nth-child(7n) {
-  box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.6);
-}
-
-/* Navbar fixed on top */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-  background: rgba(20, 30, 50, 0.7);
-  backdrop-filter: blur(10px);
-  padding: 15px;
-  color: white;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.8rem;
-  user-select: none;
-  box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.instagram-link {
-  position: absolute;
-  right: 5px;
-  display: flex;
-  align-items: center;
-  color: white;
-  text-decoration: none;
-  transition: transform 0.3s ease;
-}
-
-.instagram-link:hover {
-  transform: scale(1.2);
-}
-
-.instagram-link svg {
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
-}
+/* Navbar styling moved to navbar.css */
 
 /* Container grid */
 .container {
@@ -164,6 +89,7 @@ body {
   transform: translateZ(0);
   /* Help browser optimize animations */
   will-change: transform, visibility;
+  z-index: 1;
 }
 
 /* Vertical stacked images */
@@ -255,14 +181,14 @@ body {
   );
   background-size: 400%;
   border-radius: 10px;
-  z-index: -1;
+  z-index: 0;
   opacity: 0.16;
   transition: opacity 0.3s ease;
   filter: blur(1px);
-  /* Remove mix-blend-mode for better performance */
   /* Use hardware acceleration */
   transform: translateZ(0);
   will-change: opacity;
+  mix-blend-mode: normal;
 }
 
 .rainbow-box::after {
@@ -306,6 +232,9 @@ body {
   pointer-events: none;
   margin: 0 auto;
   object-fit: contain;
+  position: relative;
+  z-index: 2;
+  opacity: 1 !important;
 }
 
 /* Mobile responsiveness */
@@ -336,11 +265,7 @@ body {
     -webkit-backface-visibility: hidden;
   }
   
-  /* Optimize navbar */
-  .navbar {
-    will-change: transform;
-    backface-visibility: hidden;
-  }
+  /* Navbar optimizations moved to navbar.css */
   
   .sticky-popup {
     top: calc(20% + 7px);
