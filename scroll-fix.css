@@ -4,13 +4,32 @@
 }
 
 .is-scrolling img {
-  image-rendering: optimizeSpeed;
+  image-rendering: auto;
 }
 
-/* Prevent layout shifts during image loading */
+/* Fix image display issues on mobile */
 .rainbow-box img {
-  min-height: 100px;
-  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  background-color: transparent;
+}
+
+/* Remove dark borders on mobile */
+@media (max-width: 768px) {
+  .rainbow-box {
+    padding: 0;
+    background-color: transparent;
+  }
+  
+  .rainbow-box img {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    border-radius: 12px;
+  }
 }
 
 /* Hardware acceleration for smoother scrolling */
@@ -18,4 +37,20 @@
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
+}
+
+/* Optimize initial loading on mobile */
+.loading-images .rainbow-box::before,
+.loading-images .rainbow-box::after {
+  animation: none !important;
+}
+
+.loading-images .rainbow-box {
+  animation: none !important;
+}
+
+/* Reduce image quality during scroll for better performance */
+.is-scrolling img {
+  image-rendering: optimizeSpeed;
+  transform: translateZ(0);
 }

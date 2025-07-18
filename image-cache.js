@@ -5,10 +5,56 @@ document.addEventListener('DOMContentLoaded', () => {
   let isScrolling = false;
   let scrollTimeout;
   
+  // Check if device is mobile
+  const isMobile = window.innerWidth <= 768;
+  
+  // Simplified image loading for mobile
+  if (isMobile) {
+    // Only load visible images initially
+    const loadVisibleImages = () => {
+      const viewportHeight = window.innerHeight;
+      document.querySelectorAll('.rainbow-box').forEach(box => {
+        const rect = box.getBoundingClientRect();
+        const isVisible = rect.top < viewportHeight * 1.5 && rect.bottom > -viewportHeight * 0.5;
+        
+        if (isVisible) {
+          const images = box.querySelectorAll('img');
+          images.forEach(img => {
+            if (img.dataset.src && !img.dataset.loading) {
+              img.dataset.loading = 'true';
+              // Use smaller image size for mobile
+              img.width = 300;
+              img.src = img.dataset.src;
+            }
+          });
+        }
+      });
+    };
+    
+    // Load visible images immediately
+    loadVisibleImages();
+    
+    // Load more images when scrolling stops
+    document.addEventListener('scroll', () => {
+      if (!isScrolling) {
+        isScrolling = true;
+        document.body.classList.add('is-scrolling');
+      }
+      
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+        document.body.classList.remove('is-scrolling');
+        loadVisibleImages();
+      }, 100);
+    }, { passive: true });
+    
+    return; // Skip the rest of the code for mobile
+  }
+  
+  // Desktop code below
   // Preload images that will soon be visible
   const preloadObserver = new IntersectionObserver((entries) => {
-    if (isScrolling) return; // Skip preloading during active scrolling
-    
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const box = entry.target;

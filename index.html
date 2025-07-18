@@ -13,6 +13,9 @@
   <!-- Preload critical CSS -->
   <link rel="preload" href="style.css" as="style">
   <link rel="preload" href="lava-effect.css" as="style">
+  <!-- Preload critical images -->
+  <link rel="preload" href="./images/placeholder.svg" as="image">
+  <link rel="preload" href="./images/angel.jpg" as="image" media="(max-width: 768px)">
   <!-- Load CSS -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="lava-effect.css" />
@@ -22,6 +25,7 @@
   <!-- Preload animations -->
   <script src="preload-animations.js"></script>
   <script src="scroll-optimizer.js"></script>
+  <script src="mobile-image-loader.js"></script>
 </head>
 <body>
 
@@ -45,52 +49,52 @@
 
   <div class="container">
     <div class="rainbow-box">
-      <img src="./images/angel.jpg" alt="angel" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/angel.jpg" alt="angel" loading="eager" width="300" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/vampireBites.jpg" alt="vampire bites" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/vampireBites.jpg" alt="vampire bites" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/dj.jpg" alt="dj" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/dj.jpg" alt="dj" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/gayButAngelic.png" alt="gay but angelic" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/gayButAngelic.png" alt="gay but angelic" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/gayButAzzurro.jpg" alt="gay but azzurro" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/gayButAzzurro.jpg" alt="gay but azzurro" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/gay.jpg" alt="gay" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/gay.jpg" alt="gay" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box horizontal">
-      <img src="./images/fleabag.jpg" alt="fleabag" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/fleabag.jpg" alt="fleabag" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box vertical-stack">
-      <img src="./images/horns.png" alt="horns" loading="lazy" fetchpriority="low" />
-      <img src="./images/jam.jpg" alt="jam" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/horns.png" alt="horns" loading="lazy" width="300" />
+      <img src="./images/placeholder.svg" data-src="./images/jam.jpg" alt="jam" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box horizontal">
-      <img src="./images/rainbowyCore.jpg" alt="rainbowy core" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/rainbowyCore.jpg" alt="rainbowy core" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box vertical-stack">
-      <img src="./images/kurt.jpg" alt="kurt" loading="lazy" fetchpriority="low" />
-      <img src="./images/out.jpg" alt="out" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/kurt.jpg" alt="kurt" loading="lazy" width="300" />
+      <img src="./images/placeholder.svg" data-src="./images/out.jpg" alt="out" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/space.jpg" alt="space" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/space.jpg" alt="space" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/almostOut.jpg" alt="almost out" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/almostOut.jpg" alt="almost out" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box vertical-stack">
-      <img src="./images/collar.jpg" alt="collar" loading="lazy" fetchpriority="low" />
-      <img src="./images/eyeleashes.jpg" alt="eyelashes" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/collar.jpg" alt="collar" loading="lazy" width="300" />
+      <img src="./images/placeholder.svg" data-src="./images/eyeleashes.jpg" alt="eyelashes" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box horizontal">
-      <img src="./images/fleabagSmile.jpg" alt="fleabag smile" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/fleabagSmile.jpg" alt="fleabag smile" loading="lazy" width="300" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/meth.webp" alt="meth" loading="lazy" fetchpriority="low" />
+      <img src="./images/placeholder.svg" data-src="./images/meth.webp" alt="meth" loading="lazy" width="300" />
     </div>
   </div>
 
