@@ -1,23 +1,21 @@
-/* Completely disable animations during scrolling */
-body.scrolling * {
-  animation-play-state: paused !important;
-  transition: none !important;
+/* Scroll performance optimizations */
+.is-scrolling .rainbow-box {
+  will-change: transform;
 }
 
-/* Disable GPU-intensive effects during scrolling */
-body.scrolling .rainbow-bg {
-  filter: none !important;
-  opacity: 0.3 !important;
+.is-scrolling img {
+  image-rendering: optimizeSpeed;
 }
 
-/* Disable box shadows during scrolling */
-body.scrolling .rainbow-box::before,
-body.scrolling .rainbow-box::after {
-  opacity: 0 !important;
-  filter: none !important;
+/* Prevent layout shifts during image loading */
+.rainbow-box img {
+  min-height: 100px;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
-/* Disable float animation during scrolling */
-body.scrolling .rainbow-box {
-  transform: none !important;
+/* Hardware acceleration for smoother scrolling */
+.container {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
