@@ -1,0 +1,51 @@
+/* Precompute animation values using CSS variables */
+:root {
+  /* Precomputed gradient positions */
+  --gradient-pos-0: 0% 50%;
+  --gradient-pos-25: 25% 50%;
+  --gradient-pos-50: 50% 50%;
+  --gradient-pos-75: 75% 50%;
+  --gradient-pos-100: 100% 50%;
+  
+  /* Precomputed float positions */
+  --float-y-0: 0px;
+  --float-y-25: -2.5px;
+  --float-y-50: -5px;
+  --float-y-75: -2.5px;
+}
+
+/* Use composited layers for all animations */
+.rainbow-bg {
+  /* Create a separate GPU layer */
+  transform: translateZ(0);
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-backface-visibility: hidden;
+  
+  /* Use will-change sparingly for better performance */
+  will-change: opacity;
+  
+  /* Ensure animation always runs */
+  animation-play-state: running !important;
+  
+  /* Use a longer duration for better performance */
+  animation-duration: 20s !important;
+}
+
+/* Optimize rainbow boxes */
+.rainbow-box {
+  /* Create a separate GPU layer */
+  transform: translateZ(0);
+  -webkit-transform: translate3d(0,0,0);
+  
+  /* Ensure animation always runs */
+  animation-play-state: running !important;
+  
+  /* Use a longer duration for better performance */
+  animation-duration: 8s !important;
+}
+
+/* Remove color change during scroll */
+html.is-scrolling .rainbow-bg {
+  /* Keep same visual appearance during scroll */
+  transition: none !important;
+}

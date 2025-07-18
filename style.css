@@ -155,7 +155,7 @@ body {
   cursor: pointer;
   border-radius: 12px;
   overflow: visible; /* so shadows show outside */
-  transition: transform 0.5s ease; /* Only transition transform for better performance */
+  transition: transform 0.5s ease, visibility 0.3s ease; /* Add visibility transition */
   display: flex;
   align-items: center;
   padding: 20px;
@@ -163,7 +163,7 @@ body {
   /* Use hardware acceleration */
   transform: translateZ(0);
   /* Help browser optimize animations */
-  will-change: transform;
+  will-change: transform, visibility;
 }
 
 /* Vertical stacked images */
@@ -183,13 +183,19 @@ body {
 
 @keyframes float {
   0% {
-    transform: translateY(0px) translateZ(0);
+    transform: translateY(var(--float-y-0)) translateZ(0);
+  }
+  25% {
+    transform: translateY(var(--float-y-25)) translateZ(0);
   }
   50% {
-    transform: translateY(-10px) translateZ(0);
+    transform: translateY(var(--float-y-50)) translateZ(0);
+  }
+  75% {
+    transform: translateY(var(--float-y-75)) translateZ(0);
   }
   100% {
-    transform: translateY(0px) translateZ(0);
+    transform: translateY(var(--float-y-0)) translateZ(0);
   }
 }
 
@@ -304,8 +310,37 @@ body {
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
+  /* Optimize rendering */
+  body {
+    -webkit-font-smoothing: antialiased;
+  }
+  
   .rainbow-box {
     padding: 5px;
+    contain: layout style; /* Improve rendering performance */
+  }
+  
+  /* Optimize elements that are not in view */
+  .rainbow-box:not(.in-view) .rainbow-bg {
+    opacity: 0.3 !important; /* Reduce opacity but keep animation running */
+  }
+  
+  /* Optimize scrolling */
+  .rainbow-box::after {
+    will-change: opacity;
+    backface-visibility: hidden;
+  }
+  
+  /* Reduce paint operations */
+  .rainbow-box img {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  
+  /* Optimize navbar */
+  .navbar {
+    will-change: transform;
+    backface-visibility: hidden;
   }
   
   .sticky-popup {

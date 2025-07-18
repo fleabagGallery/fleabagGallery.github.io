@@ -1,0 +1,23 @@
+/* Completely disable animations during scrolling */
+body.scrolling * {
+  animation-play-state: paused !important;
+  transition: none !important;
+}
+
+/* Disable GPU-intensive effects during scrolling */
+body.scrolling .rainbow-bg {
+  filter: none !important;
+  opacity: 0.3 !important;
+}
+
+/* Disable box shadows during scrolling */
+body.scrolling .rainbow-box::before,
+body.scrolling .rainbow-box::after {
+  opacity: 0 !important;
+  filter: none !important;
+}
+
+/* Disable float animation during scrolling */
+body.scrolling .rainbow-box {
+  transform: none !important;
+}

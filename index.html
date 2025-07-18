@@ -2,20 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>FLEABAG!!1! Neon Rainbow Gallery</title>
   <!-- Performance optimizations -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="Fleabag's Rainbow Neon Gallery - Art Portfolio">
+  <meta name="theme-color" content="#0f2027">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <!-- Preload critical CSS -->
   <link rel="preload" href="style.css" as="style">
   <link rel="preload" href="lava-effect.css" as="style">
   <!-- Load CSS -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="lava-effect.css" />
-  <!-- Mobile-specific optimizations -->
-  <link rel="stylesheet" href="mobile.css" media="(max-width: 768px)" />
+  <link rel="stylesheet" href="always-animate.css" />
+  <link rel="stylesheet" href="scroll-fix.css" />
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <!-- Preload animations -->
+  <script src="preload-animations.js"></script>
+  <script src="scroll-optimizer.js"></script>
 </head>
 <body>
 
@@ -39,58 +45,59 @@
 
   <div class="container">
     <div class="rainbow-box">
-      <img src="./images/angel.jpg" alt="angel" loading="lazy" />
+      <img src="./images/angel.jpg" alt="angel" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/vampireBites.jpg" alt="vampire bites" loading="lazy" />
+      <img src="./images/vampireBites.jpg" alt="vampire bites" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/dj.jpg" alt="dj" loading="lazy" />
+      <img src="./images/dj.jpg" alt="dj" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/gayButAngelic.png" alt="gay but angelic" loading="lazy" />
+      <img src="./images/gayButAngelic.png" alt="gay but angelic" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/gayButAzzurro.jpg" alt="gay but azzurro" loading="lazy" />
+      <img src="./images/gayButAzzurro.jpg" alt="gay but azzurro" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/gay.jpg" alt="gay" loading="lazy" />
+      <img src="./images/gay.jpg" alt="gay" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box horizontal">
-      <img src="./images/fleabag.jpg" alt="fleabag" loading="lazy" />
+      <img src="./images/fleabag.jpg" alt="fleabag" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box vertical-stack">
-      <img src="./images/horns.png" alt="horns" loading="lazy" />
-      <img src="./images/jam.jpg" alt="jam" loading="lazy" />
+      <img src="./images/horns.png" alt="horns" loading="lazy" fetchpriority="low" />
+      <img src="./images/jam.jpg" alt="jam" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box horizontal">
-      <img src="./images/rainbowyCore.jpg" alt="rainbowy core" loading="lazy" />
+      <img src="./images/rainbowyCore.jpg" alt="rainbowy core" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box vertical-stack">
-      <img src="./images/kurt.jpg" alt="kurt" loading="lazy" />
-      <img src="./images/out.jpg" alt="out" loading="lazy" />
+      <img src="./images/kurt.jpg" alt="kurt" loading="lazy" fetchpriority="low" />
+      <img src="./images/out.jpg" alt="out" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/space.jpg" alt="space" loading="lazy" />
+      <img src="./images/space.jpg" alt="space" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/almostOut.jpg" alt="almost out" loading="lazy" />
+      <img src="./images/almostOut.jpg" alt="almost out" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box vertical-stack">
-      <img src="./images/collar.jpg" alt="collar" loading="lazy" />
-      <img src="./images/eyeleashes.jpg" alt="eyelashes" loading="lazy" />
+      <img src="./images/collar.jpg" alt="collar" loading="lazy" fetchpriority="low" />
+      <img src="./images/eyeleashes.jpg" alt="eyelashes" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box horizontal">
-      <img src="./images/fleabagSmile.jpg" alt="fleabag smile" loading="lazy" />
+      <img src="./images/fleabagSmile.jpg" alt="fleabag smile" loading="lazy" fetchpriority="low" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/meth.webp" alt="meth" loading="lazy" />
+      <img src="./images/meth.webp" alt="meth" loading="lazy" fetchpriority="low" />
     </div>
   </div>
 
   <script src="script.js"></script>
   <script src="popup-handler.js"></script>
   <script src="lava-effect.js"></script>
-  <script src="mobile-optimize.js"></script>
+  <script src="animation-fix.js"></script>
+  <script src="image-cache.js"></script>
 </body>
 </html>

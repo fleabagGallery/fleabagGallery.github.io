@@ -1,120 +1,140 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Detect if we're on mobile
+  // Check if we're on mobile
   const isMobile = window.innerWidth < 768;
   
   // Use requestAnimationFrame for better performance
   requestAnimationFrame(() => {
     // Add staggered animation delay and random offsets to rainbow boxes
     document.querySelectorAll('.rainbow-box').forEach((box, index) => {
-      // On mobile, only apply minimal styling
-      if (!isMobile) {
-        // Limit animation delays to reduce simultaneous animations
-        box.style.animationDelay = `${index % 5 * 0.2}s`;
-        
-        // Add random margin offsets for a more natural look
-        const randomMarginTop = Math.floor(Math.random() * 15) - 5;
-        const randomMarginLeft = Math.floor(Math.random() * 10) - 5;
-        box.style.marginTop = `${randomMarginTop}px`;
-        box.style.marginLeft = `${randomMarginLeft}px`;
-      }
+      // Limit animation delays to reduce simultaneous animations
+      box.style.animationDelay = `${index % 5 * 0.2}s`;
+      
+      // Add random margin offsets for a more natural look
+      const randomMarginTop = Math.floor(Math.random() * 15) - 5;
+      const randomMarginLeft = Math.floor(Math.random() * 10) - 5;
+      box.style.marginTop = `${randomMarginTop}px`;
+      box.style.marginLeft = `${randomMarginLeft}px`;
       
       // Create a pseudo-element for the rainbow effect
+      // Use a single rainbow effect for all boxes instead of individual ones
       if (!box.querySelector('.rainbow-bg')) {
         const rainbowEl = document.createElement('div');
         rainbowEl.className = 'rainbow-bg';
         box.appendChild(rainbowEl);
       }
       
-      // Only add hover effects on desktop
-      if (!isMobile) {
-        // Add hover effect with passive option for better performance
-        box.addEventListener('mouseenter', () => {
-          const rainbowEl = box.querySelector('.rainbow-bg');
-          if (rainbowEl) rainbowEl.style.opacity = '0.9';
-        }, { passive: true });
-        
-        box.addEventListener('mouseleave', () => {
-          const rainbowEl = box.querySelector('.rainbow-bg');
-          if (rainbowEl) rainbowEl.style.opacity = '0.7';
-        }, { passive: true });
-      }
+      // Add hover effect with passive option for better performance
+      box.addEventListener('mouseenter', () => {
+        const rainbowEl = box.querySelector('.rainbow-bg');
+        if (rainbowEl) rainbowEl.style.opacity = '0.9';
+      }, { passive: true });
+      
+      box.addEventListener('mouseleave', () => {
+        const rainbowEl = box.querySelector('.rainbow-bg');
+        if (rainbowEl) rainbowEl.style.opacity = '0.7';
+      }, { passive: true });
       
       // Add static filter to images instead of animations for better performance
       const images = box.querySelectorAll('img');
       images.forEach(img => {
-        if (!isMobile) {
-          // Random brightness between 90% and 110%
-          const brightness = 90 + Math.floor(Math.random() * 20);
-          // Random contrast between 95% and 105%
-          const contrast = 95 + Math.floor(Math.random() * 10);
-          // Random saturation between 95% and 110%
-          const saturation = 95 + Math.floor(Math.random() * 15);
-          
-          // Apply static filter instead of animation for better performance
-          img.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`;
-        }
+        // Random brightness between 90% and 110%
+        const brightness = 90 + Math.floor(Math.random() * 20);
+        // Random contrast between 95% and 105%
+        const contrast = 95 + Math.floor(Math.random() * 10);
+        // Random saturation between 95% and 110%
+        const saturation = 95 + Math.floor(Math.random() * 15);
+        
+        // Apply static filter instead of animation for better performance
+        img.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`;
       });
     });
   });
 
-  // Only create stars if not on mobile or reduce count significantly
-  if (!isMobile) {
-    // Create starry sky with reduced number of stars
-    const starrySky = document.createElement('div');
-    starrySky.className = 'starry-sky';
-    document.body.prepend(starrySky);
+  // Create starry sky with reduced number of stars
+  const starrySky = document.createElement('div');
+  starrySky.className = 'starry-sky';
+  document.body.prepend(starrySky);
 
-    // Create stars with reduced count for better performance
-    // Use a document fragment to batch DOM operations
-    const starsFragment = document.createDocumentFragment();
-    const starCount = 100; // Full count for desktop
+  // Create stars with reduced count for better performance
+  // Use a document fragment to batch DOM operations
+  const starsFragment = document.createDocumentFragment();
+  const starCount = isMobile ? 50 : 100; // Reduce stars on mobile
+  
+  for (let i = 0; i < starCount; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
     
-    for (let i = 0; i < starCount; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      
-      // Random position
-      const left = Math.random() * 100;
-      const top = Math.random() * 100;
-      star.style.left = `${left}%`;
-      star.style.top = `${top}%`;
-      
-      // Random size (1-3px)
-      const size = Math.random() * 2 + 1;
-      star.style.width = `${size}px`;
-      star.style.height = `${size}px`;
-      
-      // Random animation duration and delay
-      star.style.setProperty('--pulse-duration', `${Math.random() * 3 + 2}s`);
-      star.style.setProperty('--pulse-delay', `${Math.random() * 5}s`);
-      
-      starsFragment.appendChild(star);
+    // Random position
+    const left = Math.random() * 100;
+    const top = Math.random() * 100;
+    star.style.left = `${left}%`;
+    star.style.top = `${top}%`;
+    
+    // Random size (1-3px)
+    const size = Math.random() * 2 + 1;
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
+    
+    // Random animation duration and delay
+    star.style.setProperty('--pulse-duration', `${Math.random() * 3 + 2}s`);
+    star.style.setProperty('--pulse-delay', `${Math.random() * 5}s`);
+    
+    starsFragment.appendChild(star);
+  }
+  
+  // Add all stars at once to minimize reflows
+  starrySky.appendChild(starsFragment);
+  
+  // Mobile-specific optimizations
+  if (isMobile) {
+    // Optimize image rendering
+    document.querySelectorAll('img:not(.popup-image)').forEach(img => {
+      img.style.backfaceVisibility = 'hidden';
+      img.style.perspective = '1000px';
+      img.style.transform = 'translate3d(0,0,0)';
+    });
+    
+    // Make sure popup image keeps its rotation
+    const popupImage = document.querySelector('.popup-image');
+    if (popupImage) {
+      popupImage.style.backfaceVisibility = 'hidden';
+      popupImage.style.perspective = '1000px';
+      popupImage.style.transform = 'rotate(90deg)';
     }
     
-    // Add all stars at once to minimize reflows
-    starrySky.appendChild(starsFragment);
-  } else {
-    // For mobile, create a minimal starry sky with very few stars
-    const starrySky = document.createElement('div');
-    starrySky.className = 'starry-sky';
-    document.body.prepend(starrySky);
+    // Force all animations to run continuously
+    document.querySelectorAll('.rainbow-box').forEach(box => {
+      const bg = box.querySelector('.rainbow-bg');
+      if (bg) {
+        // Ensure animation always runs
+        bg.style.animationPlayState = 'running';
+      }
+    });
     
-    // Create just a few static stars for mobile
-    const starsFragment = document.createDocumentFragment();
-    const starCount = 20; // Very few stars for mobile
+    // Use IntersectionObserver to optimize visible elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const bg = entry.target.querySelector('.rainbow-bg');
+        if (entry.isIntersecting) {
+          // Element is visible, full effects
+          entry.target.classList.add('in-view');
+          if (bg) {
+            bg.style.opacity = '0.7';
+          }
+        } else {
+          // Element is not visible, reduce effects but keep animations running
+          entry.target.classList.remove('in-view');
+          if (bg) {
+            bg.style.opacity = '0.3';
+          }
+        }
+      });
+    }, { rootMargin: '100px' });
     
-    for (let i = 0; i < starCount; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.left = `${Math.random() * 100}%`;
-      star.style.top = `${Math.random() * 100}%`;
-      star.style.width = '2px';
-      star.style.height = '2px';
-      star.style.opacity = '0.7';
-      starsFragment.appendChild(star);
-    }
-    
-    starrySky.appendChild(starsFragment);
+    // Observe all rainbow boxes
+    document.querySelectorAll('.rainbow-box').forEach(box => {
+      observer.observe(box);
+    });
   }
 
   // Create lightbox elements
