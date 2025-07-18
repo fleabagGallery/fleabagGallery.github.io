@@ -1,0 +1,92 @@
+#loading-screen-placeholder,
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0f2027;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  transition: opacity 0.5s ease;
+}
+
+.loading-circle {
+  width: 120px;
+  height: 120px;
+  position: relative;
+}
+
+.loading-circle::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #fb0094, #ff69b4, #0080ff, #00ff80, #ff0080);
+  background-size: 300%;
+  animation: rotate 3s linear infinite;
+}
+
+.loading-circle::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  background: #0f2027;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.loading-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 16px;
+  z-index: 2;
+}
+
+.loading-text::after {
+  content: '';
+  animation: loadingDots 1.5s infinite;
+}
+
+@keyframes loadingDots {
+  0% { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+  100% { content: ''; }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+    background-position: 0% 0%;
+  }
+  100% {
+    transform: rotate(360deg);
+    background-position: 300% 0%;
+  }
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Ensure loading screen is above everything */
+body.loading {
+  overflow: hidden;
+}

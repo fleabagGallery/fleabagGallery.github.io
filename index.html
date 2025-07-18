@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>FLEABAG!!1! Neon Rainbow Gallery</title>
+  <!-- Loading screen CSS (must be first) -->
+  <link rel="stylesheet" href="loading-screen.css" />
+  <!-- Loading screen script (must be early) -->
+  <script src="loading-screen.js"></script>
+  <!-- Force scroll to top -->
+  <script src="scroll-to-top.js"></script>
   <!-- Performance optimizations -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="Fleabag's Rainbow Neon Gallery - Art Portfolio">
@@ -15,7 +21,16 @@
   <link rel="preload" href="lava-effect.css" as="style">
   <!-- Preload critical images -->
   <link rel="preload" href="./images/placeholder.svg" as="image">
-  <link rel="preload" href="./images/angel.jpg" as="image" media="(max-width: 768px)">
+  <link rel="preload" href="./images/angel.jpg" as="image">
+  <link rel="preload" href="./images/vampireBites.jpg" as="image">
+  <link rel="preload" href="./images/dj.jpg" as="image">
+  <link rel="preload" href="./images/gayButAngelic.png" as="image">
+  <link rel="preload" href="./images/gayButAzzurro.jpg" as="image">
+  <link rel="preload" href="./images/gay.jpg" as="image">
+  <link rel="preload" href="./images/fleabag.jpg" as="image">
+  <link rel="preload" href="./images/horns.png" as="image">
+  <link rel="preload" href="./images/jam.jpg" as="image">
+  <link rel="preload" href="./images/rainbowyCore.jpg" as="image">
   <!-- Load CSS -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="lava-effect.css" />
@@ -26,8 +41,20 @@
   <script src="preload-animations.js"></script>
   <script src="scroll-optimizer.js"></script>
   <script src="mobile-image-loader.js"></script>
+  <script>
+    // Mark body as loading
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('loading');
+    });
+  </script>
 </head>
 <body>
+  <!-- Inline loading screen -->
+  <div class="loading-screen">
+    <div class="loading-circle">
+      <div class="loading-text">Loading</div>
+    </div>
+  </div>
 
   <div class="navbar">
     Fleabag's Rainbow Neon Gallery
@@ -48,33 +75,33 @@
   </p>
 
   <div class="container">
-    <div class="rainbow-box">
-      <img src="./images/placeholder.svg" data-src="./images/angel.jpg" alt="angel" loading="eager" width="300" />
+    <div class="rainbow-box" id="top-box">
+      <img src="./images/angel.jpg" alt="angel" loading="eager" fetchpriority="high" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/placeholder.svg" data-src="./images/vampireBites.jpg" alt="vampire bites" loading="lazy" width="300" />
+      <img src="./images/vampireBites.jpg" alt="vampire bites" loading="eager" fetchpriority="high" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/placeholder.svg" data-src="./images/dj.jpg" alt="dj" loading="lazy" width="300" />
+      <img src="./images/dj.jpg" alt="dj" loading="eager" fetchpriority="high" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/placeholder.svg" data-src="./images/gayButAngelic.png" alt="gay but angelic" loading="lazy" width="300" />
+      <img src="./images/gayButAngelic.png" alt="gay but angelic" loading="eager" fetchpriority="high" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/placeholder.svg" data-src="./images/gayButAzzurro.jpg" alt="gay but azzurro" loading="lazy" width="300" />
+      <img src="./images/gayButAzzurro.jpg" alt="gay but azzurro" loading="eager" fetchpriority="high" />
     </div>
     <div class="rainbow-box">
-      <img src="./images/placeholder.svg" data-src="./images/gay.jpg" alt="gay" loading="lazy" width="300" />
+      <img src="./images/gay.jpg" alt="gay" loading="eager" fetchpriority="high" />
     </div>
     <div class="rainbow-box horizontal">
-      <img src="./images/placeholder.svg" data-src="./images/fleabag.jpg" alt="fleabag" loading="lazy" width="300" />
+      <img src="./images/fleabag.jpg" alt="fleabag" loading="eager" fetchpriority="high" />
     </div>
     <div class="rainbow-box vertical-stack">
-      <img src="./images/placeholder.svg" data-src="./images/horns.png" alt="horns" loading="lazy" width="300" />
-      <img src="./images/placeholder.svg" data-src="./images/jam.jpg" alt="jam" loading="lazy" width="300" />
+      <img src="./images/horns.png" alt="horns" loading="eager" fetchpriority="high" width="300" />
+      <img src="./images/jam.jpg" alt="jam" loading="eager" fetchpriority="high" width="300" />
     </div>
     <div class="rainbow-box horizontal">
-      <img src="./images/placeholder.svg" data-src="./images/rainbowyCore.jpg" alt="rainbowy core" loading="lazy" width="300" />
+      <img src="./images/rainbowyCore.jpg" alt="rainbowy core" loading="eager" fetchpriority="high" width="300" />
     </div>
     <div class="rainbow-box vertical-stack">
       <img src="./images/placeholder.svg" data-src="./images/kurt.jpg" alt="kurt" loading="lazy" width="300" />

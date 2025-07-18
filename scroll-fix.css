@@ -19,7 +19,7 @@
 /* Remove dark borders on mobile */
 @media (max-width: 768px) {
   .rainbow-box {
-    padding: 0;
+    padding: 8px;
     background-color: transparent;
   }
   
@@ -28,7 +28,7 @@
     height: auto;
     max-height: none;
     min-height: 0;
-    border-radius: 12px;
+    border-radius: 8px;
   }
 }
 
@@ -53,4 +53,16 @@
 .is-scrolling img {
   image-rendering: optimizeSpeed;
   transform: translateZ(0);
+}
+
+/* Ensure top-to-bottom loading */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 0;
+  overflow-anchor: none;
+}
+
+/* Prioritize top content */
+.container > div:nth-child(-n+3) img {
+  content-visibility: visible;
 }

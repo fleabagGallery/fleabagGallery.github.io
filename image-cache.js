@@ -10,10 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Simplified image loading for mobile
   if (isMobile) {
+    // Force scroll to top on page load
+    window.scrollTo(0, 0);
+    
     // Only load visible images initially
     const loadVisibleImages = () => {
       const viewportHeight = window.innerHeight;
-      document.querySelectorAll('.rainbow-box').forEach(box => {
+      // Get all boxes and sort by their vertical position (top to bottom)
+      const boxes = Array.from(document.querySelectorAll('.rainbow-box'));
+      boxes.sort((a, b) => {
+        return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+      });
+      
+      // Process boxes in top-to-bottom order
+      boxes.forEach(box => {
         const rect = box.getBoundingClientRect();
         const isVisible = rect.top < viewportHeight * 1.5 && rect.bottom > -viewportHeight * 0.5;
         
@@ -22,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
           images.forEach(img => {
             if (img.dataset.src && !img.dataset.loading) {
               img.dataset.loading = 'true';
-              // Use smaller image size for mobile
-              img.width = 300;
               img.src = img.dataset.src;
             }
           });
