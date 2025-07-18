@@ -1,86 +1,121 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Detect if we're on mobile
+  const isMobile = window.innerWidth < 768;
+  
   // Use requestAnimationFrame for better performance
   requestAnimationFrame(() => {
     // Add staggered animation delay and random offsets to rainbow boxes
     document.querySelectorAll('.rainbow-box').forEach((box, index) => {
-      // Limit animation delays to reduce simultaneous animations
-      box.style.animationDelay = `${index % 5 * 0.2}s`;
-      
-      // Add random margin offsets for a more natural look
-      const randomMarginTop = Math.floor(Math.random() * 15) - 5;
-      const randomMarginLeft = Math.floor(Math.random() * 10) - 5;
-      box.style.marginTop = `${randomMarginTop}px`;
-      box.style.marginLeft = `${randomMarginLeft}px`;
+      // On mobile, only apply minimal styling
+      if (!isMobile) {
+        // Limit animation delays to reduce simultaneous animations
+        box.style.animationDelay = `${index % 5 * 0.2}s`;
+        
+        // Add random margin offsets for a more natural look
+        const randomMarginTop = Math.floor(Math.random() * 15) - 5;
+        const randomMarginLeft = Math.floor(Math.random() * 10) - 5;
+        box.style.marginTop = `${randomMarginTop}px`;
+        box.style.marginLeft = `${randomMarginLeft}px`;
+      }
       
       // Create a pseudo-element for the rainbow effect
-      // Use a single rainbow effect for all boxes instead of individual ones
       if (!box.querySelector('.rainbow-bg')) {
         const rainbowEl = document.createElement('div');
         rainbowEl.className = 'rainbow-bg';
         box.appendChild(rainbowEl);
       }
       
-      // Add hover effect with passive option for better performance
-      box.addEventListener('mouseenter', () => {
-        const rainbowEl = box.querySelector('.rainbow-bg');
-        if (rainbowEl) rainbowEl.style.opacity = '0.9';
-      }, { passive: true });
-      
-      box.addEventListener('mouseleave', () => {
-        const rainbowEl = box.querySelector('.rainbow-bg');
-        if (rainbowEl) rainbowEl.style.opacity = '0.7';
-      }, { passive: true });
+      // Only add hover effects on desktop
+      if (!isMobile) {
+        // Add hover effect with passive option for better performance
+        box.addEventListener('mouseenter', () => {
+          const rainbowEl = box.querySelector('.rainbow-bg');
+          if (rainbowEl) rainbowEl.style.opacity = '0.9';
+        }, { passive: true });
+        
+        box.addEventListener('mouseleave', () => {
+          const rainbowEl = box.querySelector('.rainbow-bg');
+          if (rainbowEl) rainbowEl.style.opacity = '0.7';
+        }, { passive: true });
+      }
       
       // Add static filter to images instead of animations for better performance
       const images = box.querySelectorAll('img');
       images.forEach(img => {
-        // Random brightness between 90% and 110%
-        const brightness = 90 + Math.floor(Math.random() * 20);
-        // Random contrast between 95% and 105%
-        const contrast = 95 + Math.floor(Math.random() * 10);
-        // Random saturation between 95% and 110%
-        const saturation = 95 + Math.floor(Math.random() * 15);
-        
-        // Apply static filter instead of animation for better performance
-        img.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`;
+        if (!isMobile) {
+          // Random brightness between 90% and 110%
+          const brightness = 90 + Math.floor(Math.random() * 20);
+          // Random contrast between 95% and 105%
+          const contrast = 95 + Math.floor(Math.random() * 10);
+          // Random saturation between 95% and 110%
+          const saturation = 95 + Math.floor(Math.random() * 15);
+          
+          // Apply static filter instead of animation for better performance
+          img.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`;
+        }
       });
     });
   });
 
-  // Create starry sky with reduced number of stars
-  const starrySky = document.createElement('div');
-  starrySky.className = 'starry-sky';
-  document.body.prepend(starrySky);
+  // Only create stars if not on mobile or reduce count significantly
+  if (!isMobile) {
+    // Create starry sky with reduced number of stars
+    const starrySky = document.createElement('div');
+    starrySky.className = 'starry-sky';
+    document.body.prepend(starrySky);
 
-  // Create stars with reduced count for better performance
-  // Use a document fragment to batch DOM operations
-  const starsFragment = document.createDocumentFragment();
-  const starCount = window.innerWidth < 768 ? 50 : 100; // Reduce stars on mobile
-  
-  for (let i = 0; i < starCount; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
+    // Create stars with reduced count for better performance
+    // Use a document fragment to batch DOM operations
+    const starsFragment = document.createDocumentFragment();
+    const starCount = 100; // Full count for desktop
     
-    // Random position
-    const left = Math.random() * 100;
-    const top = Math.random() * 100;
-    star.style.left = `${left}%`;
-    star.style.top = `${top}%`;
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      
+      // Random position
+      const left = Math.random() * 100;
+      const top = Math.random() * 100;
+      star.style.left = `${left}%`;
+      star.style.top = `${top}%`;
+      
+      // Random size (1-3px)
+      const size = Math.random() * 2 + 1;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      
+      // Random animation duration and delay
+      star.style.setProperty('--pulse-duration', `${Math.random() * 3 + 2}s`);
+      star.style.setProperty('--pulse-delay', `${Math.random() * 5}s`);
+      
+      starsFragment.appendChild(star);
+    }
     
-    // Random size (1-3px)
-    const size = Math.random() * 2 + 1;
-    star.style.width = `${size}px`;
-    star.style.height = `${size}px`;
+    // Add all stars at once to minimize reflows
+    starrySky.appendChild(starsFragment);
+  } else {
+    // For mobile, create a minimal starry sky with very few stars
+    const starrySky = document.createElement('div');
+    starrySky.className = 'starry-sky';
+    document.body.prepend(starrySky);
     
-    // Random animation duration and delay
-    star.style.setProperty('--pulse-duration', `${Math.random() * 3 + 2}s`);
-    star.style.setProperty('--pulse-delay', `${Math.random() * 5}s`);
+    // Create just a few static stars for mobile
+    const starsFragment = document.createDocumentFragment();
+    const starCount = 20; // Very few stars for mobile
     
-    starsFragment.appendChild(star);
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.width = '2px';
+      star.style.height = '2px';
+      star.style.opacity = '0.7';
+      starsFragment.appendChild(star);
+    }
+    
+    starrySky.appendChild(starsFragment);
   }
-  
-  // Add all stars at once to minimize reflows
-  starrySky.appendChild(starsFragment);
 
   // Create lightbox elements
   const lightbox = document.createElement('div');

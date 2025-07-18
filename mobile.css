@@ -1,0 +1,105 @@
+/* Mobile-specific optimizations */
+body {
+  background: #0f2027; /* Solid background for better performance */
+  overscroll-behavior: none; /* Prevent bounce effects */
+}
+
+/* Special class added during scrolling */
+body.scrolling .rainbow-bg {
+  animation-play-state: paused !important;
+  filter: none !important;
+  opacity: 0.2 !important;
+}
+
+body.scrolling .star {
+  opacity: 0.1 !important;
+  animation-play-state: paused !important;
+}
+
+/* Disable most animations on mobile */
+.rainbow-box {
+  animation: none !important; /* Disable float animation */
+  transform: none !important;
+  transition: transform 0.3s ease !important;
+  contain: layout style paint; /* Improve rendering performance */
+}
+
+/* Simplified rainbow effect for mobile */
+.rainbow-bg {
+  filter: blur(4px) !important; /* Reduced blur */
+  opacity: 0.5 !important;
+  animation-duration: 30s !important; /* Much slower animation */
+  background-size: 200% 200% !important; /* Smaller gradient size */
+  contain: paint; /* Improve rendering performance */
+}
+
+/* Disable pseudo-element animations */
+.rainbow-box::before,
+.rainbow-box::after {
+  filter: blur(3px) !important;
+  animation: none !important;
+  opacity: 0.1 !important; /* Much more transparent */
+}
+
+/* Reduce the number of stars visible */
+.star:nth-child(odd) {
+  display: none !important;
+}
+
+.star:nth-child(3n) {
+  display: none !important;
+}
+
+/* Optimize container for mobile */
+.container {
+  gap: 10px !important;
+  padding: 60px 10px 20px !important;
+  contain: layout style; /* Improve rendering performance */
+}
+
+/* Optimize navbar */
+.navbar {
+  backdrop-filter: none !important; /* Remove expensive filter */
+  background: rgba(20, 30, 50, 0.9) !important; /* More opaque background */
+  contain: layout style; /* Improve rendering performance */
+}
+
+/* Optimize images */
+img {
+  transform: none !important;
+  contain: strict; /* Strict containment for images */
+}
+
+/* Disable hover effects */
+.rainbow-box:hover {
+  transform: none !important;
+}
+
+.rainbow-box:hover img {
+  transform: none !important;
+}
+
+.rainbow-box:hover::before,
+.rainbow-box:hover::after {
+  opacity: 0.1 !important; /* Keep transparency even on hover */
+}
+
+/* Optimize lightbox for mobile */
+.lightbox-content {
+  transition: opacity 0.3s ease !important;
+  transform: none !important;
+}
+
+.lightbox.active .lightbox-content {
+  transform: none !important;
+}
+
+/* Optimize speech bubble */
+.speech-bubble {
+  animation: none !important;
+}
+
+/* Use translateZ(0) on all elements that need hardware acceleration */
+.navbar, .container, .rainbow-box, img, .sticky-popup {
+  transform: translateZ(0);
+}
