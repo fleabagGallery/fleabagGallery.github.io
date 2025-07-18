@@ -11,7 +11,6 @@ body {
 /* Sticky popup */
 .sticky-popup {
   position: fixed;
-  left: 20px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 1000;
@@ -77,22 +76,28 @@ body {
   border-radius: 50%;
   animation: pulse var(--pulse-duration) infinite alternate;
   animation-delay: var(--pulse-delay);
-  filter: blur(0.5px);
+  /* Remove blur filter for better performance */
+  /* Use hardware acceleration */
+  transform: translateZ(0);
+  will-change: opacity;
 }
 
 @keyframes pulse {
   0% {
     opacity: 0.1;
-    box-shadow: 0 0 0px rgba(255, 255, 255, 0);
+    /* Remove box-shadow animation for better performance */
   }
   50% {
     opacity: 1;
-    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
   }
   100% {
     opacity: 0.1;
-    box-shadow: 0 0 0px rgba(255, 255, 255, 0);
   }
+}
+
+/* Add a few larger stars with box-shadow for visual effect without animating all of them */
+.star:nth-child(7n) {
+  box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.6);
 }
 
 /* Navbar fixed on top */
@@ -150,11 +155,15 @@ body {
   cursor: pointer;
   border-radius: 12px;
   overflow: visible; /* so shadows show outside */
-  transition: all 0.5s ease;
+  transition: transform 0.5s ease; /* Only transition transform for better performance */
   display: flex;
   align-items: center;
   padding: 20px;
   animation: float 6s ease-in-out infinite;
+  /* Use hardware acceleration */
+  transform: translateZ(0);
+  /* Help browser optimize animations */
+  will-change: transform;
 }
 
 /* Vertical stacked images */
@@ -174,13 +183,32 @@ body {
 
 @keyframes float {
   0% {
-    transform: translateY(0px);
+    transform: translateY(0px) translateZ(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-10px) translateZ(0);
   }
   100% {
-    transform: translateY(0px);
+    transform: translateY(0px) translateZ(0);
+  }
+}
+
+/* Reduce animation on mobile */
+@media (max-width: 768px) {
+  .rainbow-box {
+    animation-duration: 8s; /* Slower animation on mobile */
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0px) translateZ(0);
+    }
+    50% {
+      transform: translateY(-5px) translateZ(0); /* Less movement on mobile */
+    }
+    100% {
+      transform: translateY(0px) translateZ(0);
+    }
   }
 }
 
@@ -200,7 +228,7 @@ body {
   transform: perspective(800px) rotateX(2deg) rotateY(-2deg);
 }
 
-/* Animated rainbow shadow box with before/after pseudo-elements */
+/* Optimized rainbow shadow box with before/after pseudo-elements */
 .rainbow-box::before,
 .rainbow-box::after {
   content: '';
@@ -209,26 +237,26 @@ body {
   left: -2px;
   width: calc(100% + 4px);
   height: calc(100% + 4px);
+  /* Reduced color stops for better performance */
   background: linear-gradient(
     45deg,
     #fb0094,
     #ff69b4,
     #0080ff,
     #00ff80,
-    #ffff00,
     #ff0080,
-    #fb0094,
-    #ff69b4,
-    #0080ff,
-    #00ff80
+    #fb0094
   );
   background-size: 400%;
   border-radius: 14px;
   z-index: -1;
-  opacity: 0.16; /* 20% more transparent than 0.2 */
+  opacity: 0.16;
   transition: opacity 0.3s ease;
   filter: blur(1px);
-  mix-blend-mode: overlay;
+  /* Remove mix-blend-mode for better performance */
+  /* Use hardware acceleration */
+  transform: translateZ(0);
+  will-change: opacity;
 }
 
 .rainbow-box::after {
@@ -244,7 +272,14 @@ body {
 /* Show the rainbow shadow on hover */
 .rainbow-box:hover::before,
 .rainbow-box:hover::after {
-  opacity: 0.64; /* 20% more transparent than 0.8 */
+  opacity: 0.64;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .rainbow-box::after {
+    filter: blur(6px); /* Less blur on mobile */
+  }
 }
 
 @keyframes rainbowShift {

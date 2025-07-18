@@ -1,60 +1,63 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Add staggered animation delay and random offsets to rainbow boxes
-  document.querySelectorAll('.rainbow-box').forEach((box, index) => {
-    box.style.animationDelay = `${index * 0.2}s`;
-    
-    // Add random margin offsets for a more natural look
-    const randomMarginTop = Math.floor(Math.random() * 15) - 5;
-    const randomMarginLeft = Math.floor(Math.random() * 10) - 5;
-    box.style.marginTop = `${randomMarginTop}px`;
-    box.style.marginLeft = `${randomMarginLeft}px`;
-    
-    // Create smooth rainbow animation with JS
-    const startPos = Math.floor(Math.random() * 100);
-    const speed = 0.05 + Math.random() * 0.1; // Faster movement
-    let currentPos = startPos;
-    let direction = Math.random() > 0.5 ? 1 : -1; // Random direction
-    
-    // Create a pseudo-element for the rainbow effect
-    const rainbowEl = document.createElement('div');
-    rainbowEl.className = 'rainbow-bg';
-    box.appendChild(rainbowEl);
-    
-    // No need to style the rainbow element here - it's handled by CSS now
-    
-    // Add hover effect
-    box.addEventListener('mouseenter', () => {
-      rainbowEl.style.opacity = '0.9';
-    });
-    
-    box.addEventListener('mouseleave', () => {
-      rainbowEl.style.opacity = '0.7';
-    });
-    
-    // No need for custom animation - using CSS animations now
-    
-    // Add static filter to images instead of animations for better performance
-    const images = box.querySelectorAll('img');
-    images.forEach(img => {
-      // Random brightness between 90% and 110%
-      const brightness = 90 + Math.floor(Math.random() * 20);
-      // Random contrast between 95% and 105%
-      const contrast = 95 + Math.floor(Math.random() * 10);
-      // Random saturation between 95% and 110%
-      const saturation = 95 + Math.floor(Math.random() * 15);
+  // Use requestAnimationFrame for better performance
+  requestAnimationFrame(() => {
+    // Add staggered animation delay and random offsets to rainbow boxes
+    document.querySelectorAll('.rainbow-box').forEach((box, index) => {
+      // Limit animation delays to reduce simultaneous animations
+      box.style.animationDelay = `${index % 5 * 0.2}s`;
       
-      // Apply static filter instead of animation for better performance
-      img.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`;
+      // Add random margin offsets for a more natural look
+      const randomMarginTop = Math.floor(Math.random() * 15) - 5;
+      const randomMarginLeft = Math.floor(Math.random() * 10) - 5;
+      box.style.marginTop = `${randomMarginTop}px`;
+      box.style.marginLeft = `${randomMarginLeft}px`;
+      
+      // Create a pseudo-element for the rainbow effect
+      // Use a single rainbow effect for all boxes instead of individual ones
+      if (!box.querySelector('.rainbow-bg')) {
+        const rainbowEl = document.createElement('div');
+        rainbowEl.className = 'rainbow-bg';
+        box.appendChild(rainbowEl);
+      }
+      
+      // Add hover effect with passive option for better performance
+      box.addEventListener('mouseenter', () => {
+        const rainbowEl = box.querySelector('.rainbow-bg');
+        if (rainbowEl) rainbowEl.style.opacity = '0.9';
+      }, { passive: true });
+      
+      box.addEventListener('mouseleave', () => {
+        const rainbowEl = box.querySelector('.rainbow-bg');
+        if (rainbowEl) rainbowEl.style.opacity = '0.7';
+      }, { passive: true });
+      
+      // Add static filter to images instead of animations for better performance
+      const images = box.querySelectorAll('img');
+      images.forEach(img => {
+        // Random brightness between 90% and 110%
+        const brightness = 90 + Math.floor(Math.random() * 20);
+        // Random contrast between 95% and 105%
+        const contrast = 95 + Math.floor(Math.random() * 10);
+        // Random saturation between 95% and 110%
+        const saturation = 95 + Math.floor(Math.random() * 15);
+        
+        // Apply static filter instead of animation for better performance
+        img.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`;
+      });
     });
   });
 
-  // Create starry sky
+  // Create starry sky with reduced number of stars
   const starrySky = document.createElement('div');
   starrySky.className = 'starry-sky';
   document.body.prepend(starrySky);
 
-  // Create stars
-  for (let i = 0; i < 150; i++) {
+  // Create stars with reduced count for better performance
+  // Use a document fragment to batch DOM operations
+  const starsFragment = document.createDocumentFragment();
+  const starCount = window.innerWidth < 768 ? 50 : 100; // Reduce stars on mobile
+  
+  for (let i = 0; i < starCount; i++) {
     const star = document.createElement('div');
     star.className = 'star';
     
@@ -73,8 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
     star.style.setProperty('--pulse-duration', `${Math.random() * 3 + 2}s`);
     star.style.setProperty('--pulse-delay', `${Math.random() * 5}s`);
     
-    starrySky.appendChild(star);
+    starsFragment.appendChild(star);
   }
+  
+  // Add all stars at once to minimize reflows
+  starrySky.appendChild(starsFragment);
 
   // Create lightbox elements
   const lightbox = document.createElement('div');

@@ -1,14 +1,27 @@
-// Add fluid rainbow effect with random animation speeds
+// Add fluid rainbow effect with optimized animation speeds
 document.addEventListener('DOMContentLoaded', () => {
-  // Find all rainbow backgrounds
-  const rainbowBgs = document.querySelectorAll('.rainbow-bg');
-  
-  rainbowBgs.forEach(rainbowEl => {
-    // Random animation duration for each rainbow (10-20s)
-    const duration = 10 + Math.floor(Math.random() * 10);
-    rainbowEl.style.animationDuration = `${duration}s`;
+  // Use requestIdleCallback or setTimeout to defer non-critical work
+  const optimizeRainbows = () => {
+    // Find all rainbow backgrounds
+    const rainbowBgs = document.querySelectorAll('.rainbow-bg');
     
-    // Random animation delay
-    rainbowEl.style.animationDelay = `${Math.random() * -10}s`;
-  });
+    // Use a small set of predefined durations to improve browser optimization
+    const durations = [15, 18, 20];
+    
+    rainbowBgs.forEach((rainbowEl, index) => {
+      // Use modulo to cycle through predefined durations
+      const duration = durations[index % durations.length];
+      rainbowEl.style.animationDuration = `${duration}s`;
+      
+      // Stagger animation delays to prevent simultaneous animations
+      rainbowEl.style.animationDelay = `${(index % 5) * -2}s`;
+    });
+  };
+  
+  // Use requestIdleCallback if available, otherwise setTimeout
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(optimizeRainbows);
+  } else {
+    setTimeout(optimizeRainbows, 100);
+  }
 });

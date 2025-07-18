@@ -1,4 +1,4 @@
-/* Fluid rainbow effect */
+/* Fluid rainbow effect - optimized */
 .rainbow-bg {
   position: absolute;
   top: -5px;
@@ -6,12 +6,25 @@
   width: calc(100% + 10px);
   height: calc(100% + 10px);
   border-radius: 15px;
-  background: linear-gradient(45deg, #ff0000, #ff9a00, #d0de21, #4fdc4a, #3fdad8, #2fc9e2, #1c7fee, #5f15f2, #ba0cf8, #fb07d9, #ff0000);
-  background-size: 600% 600%;
+  /* Reduced color stops for better performance */
+  background: linear-gradient(45deg, #ff0000, #ff9a00, #4fdc4a, #2fc9e2, #5f15f2, #fb07d9, #ff0000);
+  background-size: 400% 400%; /* Reduced size for better performance */
   filter: blur(8px);
   opacity: 0.7;
   z-index: -1;
+  /* will-change helps browser optimize the animation */
+  will-change: background-position;
   animation: fluid-rainbow 15s ease infinite;
+  /* Use hardware acceleration */
+  transform: translateZ(0);
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .rainbow-bg {
+    filter: blur(6px); /* Less blur on mobile */
+    background-size: 300% 300%; /* Smaller background size on mobile */
+  }
 }
 
 @keyframes fluid-rainbow {
