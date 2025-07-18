@@ -1,0 +1,142 @@
+document.addEventListener('DOMContentLoaded', () => {
+  // Add staggered animation delay and random offsets to rainbow boxes
+  document.querySelectorAll('.rainbow-box').forEach((box, index) => {
+    box.style.animationDelay = `${index * 0.2}s`;
+    
+    // Add random margin offsets for a more natural look
+    const randomMarginTop = Math.floor(Math.random() * 15) - 5;
+    const randomMarginLeft = Math.floor(Math.random() * 10) - 5;
+    box.style.marginTop = `${randomMarginTop}px`;
+    box.style.marginLeft = `${randomMarginLeft}px`;
+    
+    // Create smooth rainbow animation with JS
+    const startPos = Math.floor(Math.random() * 100);
+    const speed = 0.05 + Math.random() * 0.1; // Faster movement
+    let currentPos = startPos;
+    let direction = Math.random() > 0.5 ? 1 : -1; // Random direction
+    
+    // Create a pseudo-element for the rainbow effect
+    const rainbowEl = document.createElement('div');
+    rainbowEl.className = 'rainbow-bg';
+    box.appendChild(rainbowEl);
+    
+    // No need to style the rainbow element here - it's handled by CSS now
+    
+    // Add hover effect
+    box.addEventListener('mouseenter', () => {
+      rainbowEl.style.opacity = '0.9';
+    });
+    
+    box.addEventListener('mouseleave', () => {
+      rainbowEl.style.opacity = '0.7';
+    });
+    
+    // No need for custom animation - using CSS animations now
+    
+    // Add static filter to images instead of animations for better performance
+    const images = box.querySelectorAll('img');
+    images.forEach(img => {
+      // Random brightness between 90% and 110%
+      const brightness = 90 + Math.floor(Math.random() * 20);
+      // Random contrast between 95% and 105%
+      const contrast = 95 + Math.floor(Math.random() * 10);
+      // Random saturation between 95% and 110%
+      const saturation = 95 + Math.floor(Math.random() * 15);
+      
+      // Apply static filter instead of animation for better performance
+      img.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`;
+    });
+  });
+
+  // Create starry sky
+  const starrySky = document.createElement('div');
+  starrySky.className = 'starry-sky';
+  document.body.prepend(starrySky);
+
+  // Create stars
+  for (let i = 0; i < 150; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    
+    // Random position
+    const left = Math.random() * 100;
+    const top = Math.random() * 100;
+    star.style.left = `${left}%`;
+    star.style.top = `${top}%`;
+    
+    // Random size (1-3px)
+    const size = Math.random() * 2 + 1;
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
+    
+    // Random animation duration and delay
+    star.style.setProperty('--pulse-duration', `${Math.random() * 3 + 2}s`);
+    star.style.setProperty('--pulse-delay', `${Math.random() * 5}s`);
+    
+    starrySky.appendChild(star);
+  }
+
+  // Create lightbox elements
+  const lightbox = document.createElement('div');
+  lightbox.className = 'lightbox';
+
+  const lightboxImg = document.createElement('img');
+  lightboxImg.className = 'lightbox-content';
+  lightboxImg.alt = 'Enlarged preview';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'close';
+  closeBtn.innerHTML = '&times;';
+  closeBtn.setAttribute('aria-label', 'Close preview');
+
+  lightbox.appendChild(lightboxImg);
+  lightbox.appendChild(closeBtn);
+  document.body.appendChild(lightbox);
+
+  // Open lightbox when clicking rainbow-box
+  document.querySelectorAll('.rainbow-box').forEach(box => {
+    box.addEventListener('click', () => {
+      const img = box.querySelector('img');
+      if (!img) return;
+      
+      // Preload image
+      const preloadImg = new Image();
+      preloadImg.src = img.src;
+      
+      preloadImg.onload = () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt || 'Enlarged image';
+        
+        // Show lightbox with animation
+        requestAnimationFrame(() => {
+          lightbox.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      };
+    });
+  });
+
+  // Close lightbox function
+  const closeLightbox = () => {
+    lightbox.classList.remove('active');
+    
+    // Wait for transition to complete before removing overflow hidden
+    setTimeout(() => {
+      document.body.style.overflow = '';
+    }, 300);
+  };
+
+  // Close lightbox on clicking background or close button
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target === closeBtn) {
+      closeLightbox();
+    }
+  });
+
+  // Close lightbox on pressing Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
+});

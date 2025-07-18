@@ -1,0 +1,21 @@
+/* Fluid rainbow effect */
+.rainbow-bg {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: calc(100% + 10px);
+  height: calc(100% + 10px);
+  border-radius: 15px;
+  background: linear-gradient(45deg, #ff0000, #ff9a00, #d0de21, #4fdc4a, #3fdad8, #2fc9e2, #1c7fee, #5f15f2, #ba0cf8, #fb07d9, #ff0000);
+  background-size: 600% 600%;
+  filter: blur(8px);
+  opacity: 0.7;
+  z-index: -1;
+  animation: fluid-rainbow 15s ease infinite;
+}
+
+@keyframes fluid-rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

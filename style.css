@@ -1,0 +1,350 @@
+body {
+  margin: 0;
+  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364, #4b0082);
+  color: white;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Sticky popup */
+.sticky-popup {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.popup-image {
+  width: 100px;
+  transform: rotate(90deg);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.speech-bubble {
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  padding: 10px 15px;
+  color: #333;
+  font-weight: bold;
+  margin-left: -15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  animation: bounce 2s infinite;
+}
+
+.speech-bubble:before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid white;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.starry-sky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  animation: pulse var(--pulse-duration) infinite alternate;
+  animation-delay: var(--pulse-delay);
+  filter: blur(0.5px);
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.1;
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+  }
+  100% {
+    opacity: 0.1;
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0);
+  }
+}
+
+/* Navbar fixed on top */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background: rgba(20, 30, 50, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.8rem;
+  user-select: none;
+  box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.instagram-link {
+  position: absolute;
+  right: 5px;
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.instagram-link:hover {
+  transform: scale(1.2);
+}
+
+.instagram-link svg {
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+}
+
+/* Container grid */
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 80px 20px 40px;
+  max-width: 1200px;
+  margin: auto;
+  grid-auto-flow: dense;
+}
+
+/* Rainbow box wrapper */
+.rainbow-box {
+  position: relative;
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: visible; /* so shadows show outside */
+  transition: all 0.5s ease;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Vertical stacked images */
+.rainbow-box.vertical-stack {
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  height: calc(100% - 20px);
+}
+
+.rainbow-box.vertical-stack img {
+  height: calc(50% - 5px);
+  object-fit: cover;
+  min-height: 0;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.rainbow-box.horizontal {
+  grid-column: span 2;
+}
+
+.rainbow-box:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+.rainbow-box img {
+  transition: transform 0.3s ease;
+}
+
+.rainbow-box:hover img {
+  transform: perspective(800px) rotateX(2deg) rotateY(-2deg);
+}
+
+/* Animated rainbow shadow box with before/after pseudo-elements */
+.rainbow-box::before,
+.rainbow-box::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  background: linear-gradient(
+    45deg,
+    #fb0094,
+    #ff69b4,
+    #0080ff,
+    #00ff80,
+    #ffff00,
+    #ff0080,
+    #fb0094,
+    #ff69b4,
+    #0080ff,
+    #00ff80
+  );
+  background-size: 400%;
+  border-radius: 14px;
+  z-index: -1;
+  opacity: 0.16; /* 20% more transparent than 0.2 */
+  transition: opacity 0.3s ease;
+  filter: blur(1px);
+  mix-blend-mode: overlay;
+}
+
+.rainbow-box::after {
+  top: -5px;
+  left: -5px;
+  width: calc(100% + 10px);
+  height: calc(100% + 10px);
+  filter: blur(10px);
+  opacity: 0.64;
+  z-index: -2;
+}
+
+/* Show the rainbow shadow on hover */
+.rainbow-box:hover::before,
+.rainbow-box:hover::after {
+  opacity: 0.64; /* 20% more transparent than 0.8 */
+}
+
+@keyframes rainbowShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 400% 0%;
+  }
+}
+
+/* Images inside rainbow-box */
+.rainbow-box img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  user-select: none;
+  pointer-events: none;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .rainbow-box {
+    padding: 5px;
+  }
+  
+  .sticky-popup {
+    top: calc(20% + 7px);
+  }
+  
+  .popup-image {
+    width: 60px;
+  }
+  
+  .speech-bubble {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}
+
+
+
+/* Lightbox overlay */
+.lightbox {
+  display: flex;
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  cursor: zoom-out;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Lightbox image */
+.lightbox-content {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+  transform: scale(0.2);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0;
+}
+
+.lightbox.active .lightbox-content {
+  transform: scale(1);
+  opacity: 1;
+  transition-delay: 0.1s;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.close:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
