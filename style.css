@@ -84,7 +84,7 @@ body {
   display: flex;
   align-items: center;
   padding: 12px;
-  animation: float 6s ease-in-out infinite;
+  /* Animation moved to float-animation.css */
   /* Use hardware acceleration */
   transform: translateZ(0);
   /* Help browser optimize animations */
@@ -107,42 +107,7 @@ body {
   min-height: 0;
 }
 
-@keyframes float {
-  0% {
-    transform: translateY(var(--float-y-0)) translateZ(0);
-  }
-  25% {
-    transform: translateY(var(--float-y-25)) translateZ(0);
-  }
-  50% {
-    transform: translateY(var(--float-y-50)) translateZ(0);
-  }
-  75% {
-    transform: translateY(var(--float-y-75)) translateZ(0);
-  }
-  100% {
-    transform: translateY(var(--float-y-0)) translateZ(0);
-  }
-}
-
-/* Reduce animation on mobile */
-@media (max-width: 768px) {
-  .rainbow-box {
-    animation-duration: 8s; /* Slower animation on mobile */
-  }
-  
-  @keyframes float {
-    0% {
-      transform: translateY(0px) translateZ(0);
-    }
-    50% {
-      transform: translateY(-5px) translateZ(0); /* Less movement on mobile */
-    }
-    100% {
-      transform: translateY(0px) translateZ(0);
-    }
-  }
-}
+/* Float animation moved to float-animation.css */
 
 .rainbow-box.horizontal {
   grid-column: span 2;
@@ -250,7 +215,7 @@ body {
   
   /* Optimize elements that are not in view */
   .rainbow-box:not(.in-view) .rainbow-bg {
-    opacity: 0.3 !important; /* Reduce opacity but keep animation running */
+    opacity: 0 !important; /* Reduce opacity but keep animation running */
   }
   
   /* Optimize scrolling */

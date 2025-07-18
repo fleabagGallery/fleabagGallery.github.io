@@ -1,0 +1,31 @@
+.rainbow-box img {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0px,
+    black 3px,
+    black calc(100% - 3px),
+    transparent 100%
+  ),
+  linear-gradient(
+    to bottom,
+    transparent 0px,
+    black 3px,
+    black calc(100% - 3px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0px,
+    black 3px,
+    black calc(100% - 3px),
+    transparent 100%
+  ),
+  linear-gradient(
+    to bottom,
+    transparent 0px,
+    black 3px,
+    black calc(100% - 3px),
+    transparent 100%
+  );
+  mix-blend-mode: normal;
+}
